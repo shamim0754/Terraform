@@ -21,9 +21,9 @@ provider "aws" {
 
 resource "aws_instance" "app_server" {
   ami           = "ami-00498a47f0a5d4232"
-  instance_type = "t2.micro"
-  count         = 5
+  instance_type = var.instance_type
+  for_each = toset(["sandbox_one", "sandbox_two", "sandbox_three"])
   tags = {
-    Name = "ExampleAppServerInstance"
+    Name = each.value #each.value is same as each.key
   }
 }
